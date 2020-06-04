@@ -59,6 +59,10 @@ add_action( 'template_redirect', 'colormag_content_width' );
 
 add_action( 'after_setup_theme', 'colormag_setup' );
 
+// Theme version.
+$colormag_theme = wp_get_theme();
+define( 'COLORMAG_THEME_VERSION', $colormag_theme->get( 'Version' ) );
+
 /**
  * All setup functionalities.
  *
@@ -148,12 +152,6 @@ if ( ! function_exists( 'colormag_setup' ) ) :
 
 		// Gutenberg layout support.
 		add_theme_support( 'align-wide' );
-
-		// Add support for Block Styles.
-		add_theme_support( 'wp-block-styles' );
-
-		// Responsive embeds support.
-		add_theme_support( 'responsive-embeds' );
 
 		$starter_content = array(
 			'widgets'     => array(
@@ -348,14 +346,14 @@ if ( ! function_exists( 'colormag_setup' ) ) :
 				),
 				'womens-relay-competition'           => array(
 					'post_type'    => 'post',
-					'post_title'   => 'Womens Relay Competition',
+					'post_title'   => 'Women’s Relay Competition',
 					'post_content' => 'The young team of Franziska Hildebrand, Franziska Preuss, Vanessa Hinz and Dahlmeier clocked 1 hour, 11 minutes, 54.6 seconds to beat France by just over 1 minute. Italy took bronze, 1:06.1 behind. Germany missed six targets overall, avoiding any laps around the penalty loop. Maria Dorin Habert of France, who has two individual gold medals at these worlds, passed Russia and France on the last leg and to take her team from fourth to second.',
 					'thumbnail'    => '{{featured-image-relay-race}}',
 				),
 				'a-paradise-for-holiday'             => array(
 					'post_type'    => 'post',
 					'post_title'   => 'A Paradise for Holiday',
-					'post_content' => 'Chocolate bar marzipan sweet marzipan. Danish tart bear claw donut cake bonbon biscuit powder croissant. Liquorice cake cookie. Dessert cotton candy macaroon gummies sweet gingerbread sugar plum. Biscuit tart cake. Candy jelly ice cream halvah jelly-o jelly beans brownie pastry sweet. Candy sweet roll dessert. Lemon drops jelly-o fruitcake topping. Souffle jelly beans bonbon.',
+					'post_content' => 'Chocolate bar marzipan sweet marzipan. Danish tart bear claw donut cake bonbon biscuit powder croissant. Liquorice cake cookie. Dessert cotton candy macaroon gummies sweet gingerbread sugar plum. Biscuit tart cake. Candy jelly ice cream halvah jelly-o jelly beans brownie pastry sweet. Candy sweet roll dessert. Lemon drops jelly-o fruitcake topping. Soufflé jelly beans bonbon.',
 					'thumbnail'    => '{{featured-image-paradise-for-holiday}}',
 				),
 				'destruction-in-montania'            => array(
@@ -467,17 +465,6 @@ if ( ! function_exists( 'colormag_setup' ) ) :
 endif;
 
 /**
- * Enqueue block editor styles.
- *
- * @since ColorMag 1.4.7
- */
-function colormag_block_editor_styles() {
-	wp_enqueue_style( 'colormag-editor-googlefonts', '//fonts.googleapis.com/css?family=Open+Sans:400,600' );
-	wp_enqueue_style( 'colormag-block-editor-styles', get_template_directory_uri() . '/style-editor-block.css' );
-}
-add_action( 'enqueue_block_editor_assets', 'colormag_block_editor_styles', 1, 1 );
-
-/**
  * Define Directory Location Constants
  */
 define( 'COLORMAG_PARENT_DIR', get_template_directory() );
@@ -542,21 +529,19 @@ if ( class_exists( 'TG_Demo_Importer' ) ) {
 	require get_template_directory() . '/inc/demo-config.php';
 }
 
-// Theme version.
-$colormag_theme = wp_get_theme( 'colormag' );
-
-define( 'COLORMAG_THEME_VERSION', $colormag_theme->get( 'Version' ) );
+/**
+ * Assign the ColorMag version to a variable.
+ */
+$theme            = wp_get_theme( 'colormag' );
+$colormag_version = $theme['Version'];
 
 /**
  * Calling in the admin area for the Welcome Page as well as for the new theme notice too.
  */
 if ( is_admin() ) {
 	require get_template_directory() . '/inc/admin/class-colormag-admin.php';
-	require get_template_directory() . '/inc/admin/class-colormag-dashboard.php';
-	require get_template_directory() . '/inc/admin/class-colormag-notice.php';
-	require get_template_directory() . '/inc/admin/class-colormag-welcome-notice.php';
-	require get_template_directory() . '/inc/admin/class-colormag-upgrade-notice.php';
 	require get_template_directory() . '/inc/admin/class-colormag-theme-review-notice.php';
+	require get_template_directory() . '/inc/admin/class-colormag-dashboard.php';
 }
 
 /**

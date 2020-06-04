@@ -91,4 +91,4 @@ if ( function_exists( 'wp_body_open' ) ) {
 	<?php do_action( 'colormag_before_main' ); ?>
 
 	<div id="main" class="clearfix">
-		<div class="inner-wrap clearfix">
+		<div class="inner-wrap clearfix" style="max-height: 110px">
